@@ -1,19 +1,30 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import random
+import math
 
+def plot_neuron_line(neuron, block=False):
+    plt.clf()
+    plt.ylim((-0.5,1.5))
+    plt.axline((0, neuron.y(0)), (1, neuron.y(1)))
+    plt.scatter([0,0,1,1], [0,1,0,1])
+    plt.show(block=block)
+    plt.pause(0.5)
+
+BIAS = True
 class Neuron:
 
     def __init__(self, n):
         self.weights = []
-        for i in range(n + 1):
+        for i in range(n + 1 if BIAS else n):
             #self.weights.append(random.random() * 4 - 2)
             self.weights.append(0)
 
     
     def potential(self, feature):
         feature = feature.copy()
-        feature.insert(0, 1)
+        if BIAS:
+            feature.insert(0, 1)
         p = 0
         n = len(self.weights)
         for i in range(n):
@@ -25,12 +36,21 @@ class Neuron:
     
     def correction(self, error, learning_rate, feature):
         feature = feature.copy()
-        feature.insert(0, 1)
+        if BIAS:
+            feature.insert(0, 1)
         for i in range(len(self.weights)):
+            #print(f"correction {i}: {self.weights[i]} += {learning_rate} * {error} * {feature[i]}")
             self.weights[i] += learning_rate * error * feature[i]
+        print(f"correction: {self.weights}")
     
     def y(self, x):
-        return (-x * self.weights[1] - self.weights[0]) / self.weights[2]
+        bias = self.weights[0] if BIAS else 0
+        b1 = self.weights[1 if BIAS else 0]
+        b2 = self.weights[2 if BIAS else 1]
+        if b2 == 0.0:
+            b2 = 0.000001
+        return (-x * b1 - bias) / b2
+        
 
     def __repr__(self):
         return f"weights: {self.weights}"
@@ -45,7 +65,7 @@ class Perceptron:
         self.learning_rate = learning_rate
         self.error_distribution = []
     
-    def learn(self, features, targets, max_iteration=1000):
+    def learn(self, features, targets, max_iteration=1000, plot_frequency=1):
         self.error_distribution.clear()
         num_of_features = len(features)
         for i in range(max_iteration):
@@ -63,7 +83,11 @@ class Perceptron:
             if errors_counter == 0:
                 print("Neuron ready")
                 break
+            if i % plot_frequency == 0:
+                print(self.neuron)
+                plot_neuron_line(self.neuron)
         print("done")
+        plot_neuron_line(self.neuron, True)
 
 
 def activation(x):
@@ -96,7 +120,4 @@ x = [*range(0, len(perceptron.error_distribution), 1)]
 plt.step(x,perceptron.error_distribution)
 plt.show()
 
-
-plt.axline((0, neuron.y(0)), (1, neuron.y(1)))
-plt.scatter([0,0,1,1], [0,1,0,1])
-plt.show()
+#plot_neuron_line(perceptron.neuron, True)
