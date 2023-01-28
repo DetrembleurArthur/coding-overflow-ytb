@@ -11,10 +11,13 @@ features = [
 
 targets = [
     0,
-    0,
-    0,
-    1
+    1,
+    1,
+    0
 ]
+def colors(targets: list):
+    l = ["#"+hex(hash(str(target)))[3:9:1] for target in targets]
+    return l
 
 class Neuron:
 
@@ -54,7 +57,7 @@ class Neuron:
         n = len(self.weights)
         for i in range(n):
             print(f"correction {i}: {self.weights[i]} += {learning_rate} * {error} * {feature[i]}")
-            #self.plot_neuron_line(features, title=f"Droite de décision (i={i+1})")
+            self.plot_neuron_line(features, title=f"Droite de décision (i={i+1})")
             self.weights[i] += learning_rate * error * feature[i]
         print(f"correction: {self.weights}")
     
@@ -65,7 +68,7 @@ class Neuron:
         if b2 == 0.0:
             b2 = 0.000001
         return (-x * b1 - bias) / b2
-    
+
     def plot_neuron_line(self, features, block=False, title="No title", margin_divider=2):
         if len(features) != 0:
             fx = [row[0] for row in features]
@@ -77,7 +80,7 @@ class Neuron:
             margin_x = (max(fx) - min(fx)) / margin_divider
             plt.xlim((min(fx) - margin_x,max(fx) + margin_x))
             plt.axline((0, self.y(0)), (1, self.y(1)))
-            plt.scatter(fx, fy)
+            plt.scatter(fx, fy, c=colors(targets))
             plt.show(block=block)
             plt.pause(0.3)
         
