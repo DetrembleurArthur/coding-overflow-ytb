@@ -4,7 +4,7 @@ import math
 
 
 def f(x):
-    return 10*x
+    return 1/math.sqrt(2*math.pi) * (math.e**(-0.5 * x**2))
 
 def pentes(x, y):
     p = []
@@ -14,8 +14,10 @@ def pentes(x, y):
     p.append(p[len(p)-1])
     return p
 
-x = np.linspace(0.00001, 1, num=10000)
+x = np.linspace(-5.0, 5.0, num=10000)
 y = np.array(list(map(f, x)))
 plt.plot(x, y, label="function", c="blue")
 plt.plot(x, pentes(x, y), label="derivee", c="red")
+plt.plot(x, pentes(x, pentes(x, y)), label="derivee", c="orange")
+plt.axhline(y = 0, color = 'green')
 plt.show()
