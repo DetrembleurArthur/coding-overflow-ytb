@@ -11,13 +11,19 @@ features = [
 
 targets = [
     0,
-    1,
-    1,
-    0
+    0,
+    0,
+    1
 ]
 def colors(targets: list):
     l = ["#"+hex(hash(str(target)))[3:9:1] for target in targets]
     return l
+
+def plot_features(features):
+    fx = [row[0] for row in features]
+    fy = [row[1] for row in features]
+    plt.scatter(fx, fy, c=colors(targets))
+    plt.show()
 
 class Neuron:
 
@@ -25,7 +31,6 @@ class Neuron:
         self.weights = []
         self.allow_bias = bias
         for i in range(n + 1 if bias else n):
-            #self.weights.append(random.random() * 4 - 2)
             self.weights.append(0)
 
     
@@ -134,6 +139,7 @@ class Perceptron:
 def activation(x):
     return 1 if x >= 0 else 0
 
+plot_features(features)
 perceptron = Perceptron(2, activation, 1)
 perceptron.learn(features, targets)
 
