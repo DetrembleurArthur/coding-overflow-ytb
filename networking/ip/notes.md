@@ -41,6 +41,51 @@ Il faut effectuer un ET logique entre l'adresse ip et le complément à 1 de son
 &
 00000000.00000000.00000000.11111111
 00000000.00000000.00000000.01100100 => 0.0.0.100 = l'hôte est le 100e hôte du réseau
+
+Imaginons qu'on nous demande de découper notre adresse 192.168.1.0 en 3 sous-réseaux
+1 pour le département RH
+1 pour le département IT
+1 pour le département management
+[11000000.10101000.00000001].00000000
+3 sous-réseaux
+quelle est la puissance de deux dans laquelle on peut mettre 3 ?
+autrement dit, sur combien de bits peut-on stocker le chiffre 3 ?
+2 bits car 2^2 = 4 et 4 > 3
+par contre si on utilise que 1 bit => 2^1 = 2 et 2 < 3; on ne peut stocker 3 réseau sur 1 bit
+prenons donc 2 bits de la partie hôte de notre adresse afin de définir nos sous-réseaux
+[11000000.10101000.00000001].[00]000000
+
+1er sous-réseau:
+[11000000.10101000.00000001].[00]000000
+réseau: 192.168.1.0 /26 (on a rajouté deux bits au masque initial)
+broadcast: 192.168.1.63 => [11000000.10101000.00000001].[00]111111
+gateway: 192.168.1.62 ou 192.168.1.1
+hôtes: 6 bits pour les hôtes => 2^6 - (broadcast + réseau) = 64 - 2 = 62 hôtes
+
+2e sous-réseau:
+[11000000.10101000.00000001].[01]000000
+réseau: 192.168.1.64 /26 (on a rajouté deux bits au masque initial)
+broadcast: 192.168.1.127 => [11000000.10101000.00000001].[01]111111
+gateway: 192.168.1.126 ou 192.168.1.65
+hôtes: 6 bits pour les hôtes => 2^6 - (broadcast + réseau) = 64 - 2 = 62 hôtes
+
+3e sous-réseau:
+[11000000.10101000.00000001].[10]000000
+réseau: 192.168.1.128 /26 (on a rajouté deux bits au masque initial)
+broadcast: 192.168.1.191 => [11000000.10101000.00000001].[10]111111
+gateway: 192.168.1.190 ou 192.168.1.129
+hôtes: 6 bits pour les hôtes => 2^6 - (broadcast + réseau) = 64 - 2 = 62 hôtes
+
+Sous-réseau non utilisé:
+[11000000.10101000.00000001].[11]000000
+réseau: 192.168.1.192 /26 (on a rajouté deux bits au masque initial)
+broadcast: 192.168.1.255 => [11000000.10101000.00000001].[11]111111
+gateway: 192.168.1.254 ou 192.168.1.193
+hôtes: 6 bits pour les hôtes => 2^6 - (broadcast + réseau) = 64 - 2 = 62 hôtes
+
+Si on regarde la première adresse réseau : 192.168.1.0
+Et la dernière adresse de broadcast : 192.168.1.255
+On a bien couvert l'ensemble du /24 de départ (si on compte utiliser le 4e réseau)
 ```
 
 Dans un réseau il y a différentes adresses:
