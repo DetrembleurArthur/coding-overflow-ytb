@@ -174,39 +174,6 @@ Solution CIDR (Classless inter-domain routing) qui permet d'attribuer aux adress
 
 Ceci permet d'avoir des masques de longueur variable et donc d'être plus flexible lors de la création d'un plan d'adressage.
 
-## Problématique de l'IPv4
-
-Le soucis avec l'IPv4 c'est que le nombre d'adresse disponible est inférieur au nombre de machines à connecter sur internet
-
-IPv4 => 32 bits => 2^32 adresses différentes = 4.294.967.296 adresses => c'est pas beaucoup
-
-Il y a donc plusieurs solutions:
-
-1. Le NAT (network address translation)
-
-   Lorsque des paquets veulent sortir d'un réseau privé par le routeur pour aller vers internet, le routeur tranformer l'ip source privée en une adresse publique unique pour l'ensemble des hôtes du réseau privé
-
-   Donc internet ne connait pas les ips uniques des hôtes du réseau privé mais connait leur adresses publique commune (plusieurs type de nat)
-
-2. La récupération d'ips non utilisées
-
-   L'adresse ip publique utilisée par notre routeur est attribuée par notre opérateur internet
-
-   Lorsque notre activité internet est nulle, alors notre ip publique va nous être désattribuée et transmise à un autre routeur du réseau
-
-   Une nouvelle adresse va nous être attribuée lorsque nous allons recommencer à naviguer sur internet
-
-3. L'IPv6
-
-   Nouveau format pour les adresses ip
-
-   Elle ne font plus 32 bits mais 128 bits, ce qui nous fait au total 2^128 soit 340282366920938463463374607431768211456 adresses ip (c'est beaucoup mieux)
-
-   ```
-   notation hexadécimale
-   2a02:a03f:a179:2700:a52f:9bf:3c53:525b
-   ```
-
 ## Plages d'adresses particulières
 
 Plages d'adresses privées:
@@ -242,6 +209,45 @@ Ces adresses sont utilisées pour de la multidiffusion (channels généraux)
 ## Structure d'un paquet ip
 
 ![](ip_structure.png)
+
+
+
+## Problématique de l'IPv4
+
+Le soucis avec l'IPv4 c'est que le nombre d'adresse disponible est inférieur au nombre de machines à connecter sur internet
+
+IPv4 => 32 bits => 2^32 adresses différentes = 4.294.967.296 adresses => c'est pas beaucoup
+
+Il y a donc plusieurs solutions:
+
+1. Le NAT (network address translation)
+
+   Lorsque des paquets veulent sortir d'un réseau privé par le routeur pour aller vers internet, le routeur tranforme l'ip source privée en une adresse publique unique pour l'ensemble des hôtes du réseau privé
+
+   Donc internet ne connait pas les ips uniques des hôtes du réseau privé mais connait leur adresses publique commune (plusieurs type de nat)
+
+2. La récupération d'ips non utilisées
+
+   L'adresse ip publique utilisée par notre routeur est attribuée par notre opérateur internet
+
+   Lorsque notre activité internet est nulle, alors notre ip publique va nous être désattribuée et transmise à un autre routeur du réseau
+
+   Une nouvelle adresse va nous être attribuée lorsque nous allons recommencer à naviguer sur internet
+
+3. L'IPv6
+
+   Nouveau format pour les adresses ip
+
+   Elle ne font plus 32 bits mais 128 bits, ce qui nous fait au total 2^128 soit
+
+   340 282 366 920 938 463 463 374 607 431 768 211 456 adresses ip (c'est beaucoup mieux)
+
+   340 milliards de milliards de milliards de milliards
+
+   ```
+   notation hexadécimale
+   2a02:a03f:a179:2700:a52f:9bf:3c53:525b
+   ```
 
 ## Modèles en couches
 
