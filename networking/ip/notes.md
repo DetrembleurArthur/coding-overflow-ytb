@@ -51,6 +51,14 @@ Imaginons qu'on nous demande de découper notre adresse 192.168.1.0 en 3 sous-r�
 quelle est la puissance de deux dans laquelle on peut mettre 3 ?
 autrement dit, sur combien de bits peut-on stocker le chiffre 3 ?
 2 bits car 2^2 = 4 et 4 > 3
+OU alors: log_2(3) = 1.58496250072 => ceil(log(3, 2)) => 2
+
+>>>
+def how_many_bits(net_num):
+    return ceil(log(net_num, 2))
+<<<
+
+A quelle puissance faut-il élever 2 pour atteindre 3 ?
 par contre si on utilise que 1 bit => 2^1 = 2 et 2 < 3; on ne peut stocker 3 réseau sur 1 bit
 prenons donc 2 bits de la partie hôte de notre adresse afin de définir nos sous-réseaux
 [11000000.10101000.00000001].[00]000000
@@ -254,6 +262,30 @@ Il y a donc plusieurs solutions:
 ![](couches.png)
 
 Source: https://upload.wikimedia.org/wikipedia/commons/7/7e/Comparaison_des_mod%C3%A8les_OSI_et_TCP_IP.png
+
+
+
+## Résumé
+
+1. A quoi sert l'adresse ip ?
+
+   identifier des interfaces réseaux sur un réseau
+
+2. Format à point
+
+3. Partie réseau et hôtes + hôtes particuliers + ipview 192.168.1.100
+
+4. connectivité avec ICMP + Ip src et dst sur packet tracer
+
+5. Masque de sous réseau + exercice + ipview avec out of band
+
+6. Classfull vs CIDR
+
+7. Plages d'adresses
+
+8. Problématiques vs solutions (nat, récupération, ipv6)
+
+
 
 
 
